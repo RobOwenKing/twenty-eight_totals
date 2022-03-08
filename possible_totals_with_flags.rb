@@ -108,7 +108,7 @@ def find_possible_totals(arr)
       hsh2.each_pair { |key2, val2| returnable = compose_by_binary_operators(key1, val1, key2, val2).merge(returnable) }
     end
 
-    # break if arr.length == 4 && (1..28).each { |i| returnable[i] }
+    break if arr.length == 4 && (1..28).each { |i| returnable[i] }
   end
 
   map_by_unary_operators(returnable)
