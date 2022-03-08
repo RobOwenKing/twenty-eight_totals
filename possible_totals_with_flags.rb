@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'benchmark'
 require 'optparse'
 
 @options = {}
@@ -10,6 +11,9 @@ OptionParser.new do |opts|
   end
   opts.on('-c', '--count', 'Show count of valid solutions') do
     @options[:count] = true
+  end
+  opts.on('-t', '--time', 'Show how long it took') do
+    @options[:time] = true
   end
 end.parse!
 
@@ -103,6 +107,8 @@ def find_possible_totals(arr)
     hsh1.each_pair do |key1, val1|
       hsh2.each_pair { |key2, val2| returnable = compose_by_binary_operators(key1, val1, key2, val2).merge(returnable) }
     end
+
+    # break if arr.length == 4 && (1..28).each { |i| returnable[i] }
   end
 
   map_by_unary_operators(returnable)
@@ -119,16 +125,18 @@ def print_equations(possible_totals)
 end
 
 def parse_possible_totals(arr)
-  possible_totals = find_possible_totals(arr)
+  time = Benchmark.measure do
+    possible_totals = find_possible_totals(arr)
 
-  possible_totals.select! { |key| key.positive? && key <= 28 && key == key.to_i }
-                 .transform_keys!(&:to_i)
+    possible_totals.select! { |key| key.positive? && key <= 28 && key == key.to_i }
+                   .transform_keys!(&:to_i)
 
-  p "#{possible_totals.length} valid solutions" if @options[:count]
+    p "#{possible_totals.length} valid solutions" if @options[:count]
+    p possible_totals.keys.sort
+    print_equations(possible_totals) if @options[:equations]
+  end
 
-  p possible_totals.keys.sort
-
-  print_equations(possible_totals) if @options[:equations]
+  p "Time elapsed: #{time.real}s" if @options[:time]
 end
 
 parse_possible_totals(ARGV)
