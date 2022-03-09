@@ -102,7 +102,7 @@ def find_possible_totals(arr)
 
   returnable = {}
   breakdowns.each do |bkd|
-    next if arr.length == 4 && (1..28).all? { |i| !returnable[i.to_f].nil? }
+    break if arr.length == 4 && (1..28).all? { |i| !returnable[i.to_f].nil? }
 
     hsh1 = iterate(bkd)
     hsh2 = iterate(subtract(arr, bkd))
