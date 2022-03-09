@@ -45,19 +45,20 @@ FACTORIALS = {
 
 def find_factorials_hash(key, value)
   return { 3 => value, 6 => "#{value}!", 720 => "#{value}!!" } if key == 3
-  return { key => value, FACTORIALS[key.to_f] => "#{value}!" } if FACTORIALS[key.to_f]
 
-  { key => value }
+  { key => value, FACTORIALS[key.to_f] => "#{value}!" } if FACTORIALS[key.to_f]
 end
+
+FACTORIALS_KEYS = [0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].freeze
 
 ##
 # @param []
 #
 def map_by_unary_operators(hsh)
-  returnable = {}
+  returnable = hsh
 
   hsh.each_pair do |key, value|
-    returnable = find_factorials_hash(key, value).merge(returnable)
+    returnable = find_factorials_hash(key, value).merge(returnable) if FACTORIALS_KEYS.include?(key)
   end
 
   returnable
