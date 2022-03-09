@@ -101,14 +101,14 @@ def find_possible_totals(arr)
 
   returnable = {}
   breakdowns.each do |bkd|
+    next if arr.length == 4 && (1..28).all? { |i| !returnable[i.to_f].nil? }
+
     hsh1 = iterate(bkd)
     hsh2 = iterate(subtract(arr, bkd))
 
     hsh1.each_pair do |key1, val1|
       hsh2.each_pair { |key2, val2| returnable = compose_by_binary_operators(key1, val1, key2, val2).merge(returnable) }
     end
-
-    break if arr.length == 4 && (1..28).each { |i| returnable[i] }
   end
 
   map_by_unary_operators(returnable)
