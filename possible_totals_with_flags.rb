@@ -114,6 +114,10 @@ def find_possible_totals(arr)
   map_by_unary_operators(returnable)
 end
 
+def print_count(possible_totals)
+  p "#{possible_totals.length} valid solutions"
+end
+
 def print_equations(possible_totals)
   (1..28).each do |i|
     if possible_totals[i]
@@ -124,19 +128,27 @@ def print_equations(possible_totals)
   end
 end
 
-def parse_possible_totals(arr)
-  time = Benchmark.measure do
-    possible_totals = find_possible_totals(arr)
-
-    possible_totals.select! { |key| key.positive? && key <= 28 && key == key.to_i }
-                   .transform_keys!(&:to_i)
-
-    p "#{possible_totals.length} valid solutions" if @options[:count]
-    p possible_totals.keys.sort
-    print_equations(possible_totals) if @options[:equations]
-  end
-
-  p "Time elapsed: #{time.real}s" if @options[:time]
+def print_time(time)
+  p "Time elapsed: #{time.real}s"
 end
 
-parse_possible_totals(ARGV.map(&:to_i))
+def find_valid_totals(arr)
+  possible_totals = find_possible_totals(arr)
+
+  possible_totals.select! { |key| key.positive? && key <= 28 && key == key.to_i }
+                 .transform_keys!(&:to_i)
+end
+
+def present_possible_totals(arr)
+  time = Benchmark.measure do
+    valid_totals = find_valid_totals(arr)
+
+    print_count(valid_totals) if @options[:count]
+    p valid_totals.keys.sort
+    print_equations(valid_totals) if @options[:equations]
+  end
+
+  print_time(time) if @options[:time]
+end
+
+present_possible_totals(ARGV.map(&:to_i))
