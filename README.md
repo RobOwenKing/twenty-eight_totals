@@ -16,27 +16,27 @@ Note that while the game uses 4 digits, the tool generates its answers recursive
 
 The output can be expanded via the use of additional flags:
 
-**--count**
+**--count / -c**
 
 `-c #=> 22 valid solutions`
 
-**--equations**
+**--equations / -e**
 
-`-e #=>
+```
+-e #=>
 1: ((9/(11-10))/9)
 2: (((11!/10)/9!)-9)
 3: (((10+11)-9)-9)
 ...
 15 not possible
 ...
-28: (10-(9*(9-11)))`
+28: (10-(9*(9-11)))
+```
 
-This flag
-
-**--time**
+**--time / -t**
 
 `-t #=> Time elapsed: 6.344239430000016s`
 
 #### Deprecated version
 
-`possible_totals.rb` is deprecated and not recommended, although it should still work in many cases.
+`possible_totals.rb` is deprecated and not recommended for use, although it should still work in many cases.
