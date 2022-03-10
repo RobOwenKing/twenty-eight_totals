@@ -12,7 +12,7 @@ Example: `ruby possible_totals_with_flags.rb 9 9 10 11`
 
 Output: `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 17, 18, 19, 20, 21, 22, 24, 28]`
 
-Note that while the game uses 4 digits, the tool generates its answers recursively and should work for more numbers. It will, however, become increasingly slower.
+Note that while the game uses 4 digits, the tool generates its answers recursively and should work for more numbers, it becomes very slow, very quickly.
 
 The output can be expanded via the use of additional flags:
 
@@ -36,3 +36,7 @@ This flag
 **--time**
 
 `-t #=> Time elapsed: 6.344239430000016s`
+
+#### Deprecated version
+
+`possible_totals.rb` is deprecated and not recommended, although it should still work in many cases.
