@@ -6,11 +6,11 @@ require 'optparse'
 @options = {}
 
 OptionParser.new do |opts|
-  opts.on('-e', '--equations', 'Show sample equation for each valid total') do
-    @options[:equations] = true
-  end
   opts.on('-c', '--count', 'Show count of valid solutions') do
     @options[:count] = true
+  end
+  opts.on('-e', '--equations', 'Show sample equation for each valid total') do
+    @options[:equations] = true
   end
   opts.on('-t', '--time', 'Show how long it took') do
     @options[:time] = true
@@ -26,6 +26,8 @@ def subtract(arr1, arr2)
   arr1_dup
 end
 
+# All the factorials we're going to bother with considering
+# Note! This does not include 3, being the only digit d where d!! is within range
 FACTORIALS = {
   0.0 => 1,
   4.0 => 24,
@@ -43,17 +45,20 @@ FACTORIALS = {
   16.0 => 20_922_789_888_000
 }.freeze
 
+# Returns a hash including the original key, value pair (keys are digits, values are equations)
+# Plus any pairs after factorialing the original pair that we should consider
 def find_factorials_hash(key, value)
   return { 3 => value, 6 => "#{value}!", 720 => "#{value}!!" } if key == 3
 
   { key => value, FACTORIALS[key.to_f] => "#{value}!" } if FACTORIALS[key.to_f]
 end
 
+# Array of all the digits for which we will consider the factorial
 FACTORIALS_KEYS = [0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].freeze
 
-##
-# @param []
-#
+# Returns the original input hash (keys are digits, values are equations)
+# Plus any new key-value pairs after unary operations
+# Currenly the only unary operator is factorial
 def map_by_unary_operators(hsh)
   returnable = hsh
 
@@ -64,6 +69,9 @@ def map_by_unary_operators(hsh)
   returnable
 end
 
+# Takes in two key-value pairs (keys are digits, values are equations)
+# Returns a hash of key-value pairs of all valid combinations in the game of the inputs
+# eg: compose_by_binary_operators(1, '1', 2, '2') #=> { 3: '(1+2)', -1: '(1-2)', 1: '(2-1)'... }
 def compose_by_binary_operators(key1, val1, key2, val2)
   key1 = key1.to_f
   key2 = key2.to_f
@@ -78,8 +86,8 @@ def compose_by_binary_operators(key1, val1, key2, val2)
   returnable["#{key1}#{key2}".to_i] = "#{val1}#{val2}" if "#{key1}#{key2}".to_i == "#{val1}#{val2}"
   returnable["#{key2}#{key1}".to_i] = "#{val2}#{val1}" if "#{key2}#{key1}".to_i == "#{val2}#{val1}"
 
-  #returnable[key1**key2] = "(#{val1}**#{val2})" if key2 >= 0.2 && key2 <= 5 && key1 <= 50
-  #returnable[key2**key1] = "(#{val2}**#{val1})" if key1 >= 0.2 && key1 <= 5 && key2 <= 50
+  # returnable[key1**key2] = "(#{val1}**#{val2})" if key2 >= 0.2 && key2 <= 5 && key1 <= 50
+  # returnable[key2**key1] = "(#{val2}**#{val1})" if key1 >= 0.2 && key1 <= 5 && key2 <= 50
 
   returnable[key1.fdiv(key2)] = "(#{val1}/#{val2})" if key2 != 0
   returnable[key2.fdiv(key1)] = "(#{val2}/#{val1})" if key1 != 0
@@ -87,13 +95,17 @@ def compose_by_binary_operators(key1, val1, key2, val2)
   returnable
 end
 
+# Returns a hash (keys are digits, values are equations)
 def iterate(arr)
   return find_possible_totals(arr) if arr.length > 1
 
+  # If we're down to one digit, start going back up the recursive tree with a hash
   hsh = { arr[0] => arr[0] }
   map_by_unary_operators(hsh)
 end
 
+# Returns a hash (keys are digits, values are equations)
+# All totals that can be made with the digits in the given array
 def find_possible_totals(arr)
   breakdowns = []
   (1..arr.length / 2).each { |i| breakdowns << arr.combination(i).to_a }
@@ -132,6 +144,8 @@ def print_time(time)
   p "Time elapsed: #{time.real}s"
 end
 
+# Call #find_possible_totals with given array
+# Return only key-value pairs for relevant totals (integers 0..28)
 def find_valid_totals(arr)
   possible_totals = find_possible_totals(arr)
 
@@ -139,6 +153,8 @@ def find_valid_totals(arr)
                  .transform_keys!(&:to_i)
 end
 
+# Call #find_valid_totals with given array
+# Print results to console
 def present_possible_totals(arr)
   time = Benchmark.measure do
     valid_totals = find_valid_totals(arr)
