@@ -1,0 +1,38 @@
+# Twenty-Eight Totals
+
+This command line tool accompanies my daily numbers game, [Twenty-Eight](http://twenty-eight.robowenking.com/). It brute forces a solution to any given puzzle (where it exists).
+
+Requires `Ruby`. The code was written with `version 2.6.6`. I'm sure it will work with other versions, but I haven't checked.
+
+## Usage
+
+In this folder in the command line, type: `ruby possible_totals_with_flags.rb <numbers>`. That will output an array of the integers 1..28 which can be made with the given `<numbers>` (used once each) and the operators +, -, \*, /, ! and ^.
+
+Example: `ruby possible_totals_with_flags.rb 9 9 10 11`
+
+Output: `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 17, 18, 19, 20, 21, 22, 24, 28]`
+
+Note that while the game uses 4 digits, the tool generates its answers recursively and should work for more numbers. It will, however, become increasingly slower.
+
+The output can be expanded via the use of additional flags:
+
+**--count**
+
+`-c #=> 22 valid solutions`
+
+**--equations**
+
+`-e #=>
+1: ((9/(11-10))/9)
+2: (((11!/10)/9!)-9)
+3: (((10+11)-9)-9)
+...
+15 not possible
+...
+28: (10-(9*(9-11)))`
+
+This flag
+
+**--time**
+
+`-t #=> Time elapsed: 6.344239430000016s`
