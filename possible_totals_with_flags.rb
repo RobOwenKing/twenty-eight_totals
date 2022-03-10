@@ -95,7 +95,6 @@ def iterate(arr)
 end
 
 def find_possible_totals(arr)
-  arr.map!(&:to_i)
   breakdowns = []
   (1..arr.length / 2).each { |i| breakdowns << arr.combination(i).to_a }
   breakdowns = breakdowns.flatten(1)
@@ -140,4 +139,4 @@ def parse_possible_totals(arr)
   p "Time elapsed: #{time.real}s" if @options[:time]
 end
 
-parse_possible_totals(ARGV)
+parse_possible_totals(ARGV.map(&:to_i))
