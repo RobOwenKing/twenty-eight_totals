@@ -86,8 +86,8 @@ def compose_by_binary_operators(key1, val1, key2, val2)
   returnable["#{key1.to_i}#{key2.to_i}".to_i] = "#{val1}#{val2}" if "#{key1.to_i}#{key2.to_i}" == "#{val1}#{val2}"
   returnable["#{key2.to_i}#{key1.to_i}".to_i] = "#{val2}#{val1}" if "#{key2.to_i}#{key1.to_i}" == "#{val2}#{val1}"
 
-  # returnable[key1**key2] = "(#{val1}**#{val2})" if key2 >= 0.2 && key2 <= 5 && key1 <= 50
-  # returnable[key2**key1] = "(#{val2}**#{val1})" if key1 >= 0.2 && key1 <= 5 && key2 <= 50
+  returnable[key1**key2] = "(#{val1}**#{val2})" if key1**key2 >= 0.001 && key1**key2 <= 10_000
+  returnable[key2**key1] = "(#{val2}**#{val1})" if key2**key1 >= 0.001 && key2**key1 <= 10_000
 
   returnable[key1.fdiv(key2)] = "(#{val1}/#{val2})" if key2 != 0
   returnable[key2.fdiv(key1)] = "(#{val2}/#{val1})" if key1 != 0
