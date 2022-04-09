@@ -14,3 +14,9 @@
 #
 #   return true;
 # };
+
+# We are sorting the digits in ascending order (as order does not matter in game)
+# As there must be at least three different digits, the largest first one is 10
+first_digits = (1..10).to_a
+
+p first_digits
