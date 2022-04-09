@@ -6,9 +6,9 @@ Requires `Ruby`. The code was written with `version 2.6.6`. I'm sure it will wor
 
 ## Usage
 
-In this folder in the command line, type: `ruby possible_totals_with_flags.rb <numbers>`. That will output an array of the integers 1..28 which can be made with the given `<numbers>` (used once each) and the operators +, -, \*, /, ! and ^.
+In this folder in the command line, type: `ruby numbers_to_totals.rb <numbers>`. That will output an array of the integers 1..28 which can be made with the given `<numbers>` (used once each) and the operators +, -, \*, /, ! and ^.
 
-Example: `ruby possible_totals_with_flags.rb 9 9 10 11`
+Example: `ruby numbers_to_totals.rb 9 9 10 11`
 
 Output: `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 17, 18, 19, 20, 21, 22, 24, 28]`
 
