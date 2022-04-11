@@ -15,6 +15,7 @@
 #   return true;
 # };
 
+# Check if adding candidate to arr will produce valid set of digits of not
 def valid_candidate?(arr, candidate)
   matches = arr.count(candidate)
   return false if candidate == 1 && !matches.nil?
@@ -24,6 +25,7 @@ def valid_candidate?(arr, candidate)
   true
 end
 
+# Generate all possible sets of digits
 def generate_numbers
   possible_numbers = [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12]]
 
@@ -39,5 +41,3 @@ def generate_numbers
 
   possible_numbers
 end
-
-p generate_numbers.count
