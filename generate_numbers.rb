@@ -15,8 +15,16 @@
 #   return true;
 # };
 
-# We are sorting the digits in ascending order (as order does not matter in game)
-# As there must be at least three different digits, the largest first one is 10
-first_digits = (1..10).to_a
+def valid_candidate?(arr, candidate)
+  return false if arr.sum < arr.length + 2
 
-p first_digits
+  matches = arr.count(candidate)
+  return false if candidate == 1 && !matches.nil?
+  return false if matches >= 2
+  return false if matches == 1 && arr.any? { |e| arr.count(e) > 1 }
+
+  true
+end
+
+possible_numbers = [[]]
+
