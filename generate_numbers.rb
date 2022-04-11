@@ -16,8 +16,6 @@
 # };
 
 def valid_candidate?(arr, candidate)
-  return false if arr.sum < arr.length + 2
-
   matches = arr.count(candidate)
   return false if candidate == 1 && !matches.nil?
   return false if matches >= 2
@@ -26,5 +24,20 @@ def valid_candidate?(arr, candidate)
   true
 end
 
-possible_numbers = [[]]
+def generate_numbers
+  possible_numbers = [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12]]
 
+  while possible_numbers[0].length < 4
+    current = possible_numbers.shift
+
+    (1..12).each do |num|
+      next if num < current[-1]
+
+      possible_numbers << Array.new(current).push(num) if valid_candidate?(current, num)
+    end
+  end
+
+  possible_numbers
+end
+
+p generate_numbers.count
