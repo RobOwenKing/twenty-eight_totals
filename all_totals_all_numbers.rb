@@ -8,9 +8,10 @@ def all_totals_all_numbers
   all_totals = (1..28).to_a
   obj = {}
 
-  all_numbers[0..3].each do |arr|
+  all_numbers.each do |arr|
     # To reduce file size, we'll only store impossible totals
     obj[arr] = all_totals - find_valid_totals(arr).keys.sort
+    print '.'
   end
 
   obj
