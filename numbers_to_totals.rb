@@ -170,4 +170,4 @@ def present_possible_totals(arr)
   print_time(time) if @options[:time]
 end
 
-# present_possible_totals(ARGV.map(&:to_i))
+present_possible_totals(ARGV.map(&:to_i))
